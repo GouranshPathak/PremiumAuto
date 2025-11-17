@@ -22,9 +22,9 @@ const testDriveSchema = new mongoose.Schema({
     trim: true,
     validate: {
       validator: function(v) {
-        return /^[\+]?[1-9][\d]{0,15}$/.test(v);
+        return /^[\+]?\d{7,16}$/.test(v);
       },
-      message: 'Please provide a valid phone number'
+      message: 'Please provide a valid phone number (digits only)'
     }
   },
   
