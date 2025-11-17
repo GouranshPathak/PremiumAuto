@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PremiumAuto logo">
+  <defs>
+    <linearGradient id="car-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6b6b" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0f172a" />
+  <path d="M12 36c0-6 4-10 10-12l8-2c2-.5 4-.5 6 0l8 2c6 2 10 6 10 12v4c0 1.1-.9 2-2 2h-4c-2.2 0-4-1.8-4-4h-20c0 2.2-1.8 4-4 4h-4c-1.1 0-2-.9-2-2v-4z" fill="url(#car-gradient)" />
+  <circle cx="20" cy="42" r="6" fill="#0f172a" stroke="white" stroke-width="2" />
+  <circle cx="44" cy="42" r="6" fill="#0f172a" stroke="white" stroke-width="2" />
+  <rect x="22" y="26" width="20" height="6" rx="2" fill="#f8fafc" opacity="0.8" />
+</svg>
