@@ -15,6 +15,36 @@ const bookingRoutes = require('./routes/booking');
 // Debug: show which Mongo URI is being used
 console.log('*** Loaded MONGODB_URI =', process.env.MONGODB_URI);
 
+// CORS configuration (needs to run before other middleware)
+const rawOrigins = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = new Set([
+  'http://localhost:3000',
+  'http://localhost:8080',
+  ...rawOrigins
+]);
+
+const vercelPreviewRegex = /^https:\/\/premium-auto-[a-z0-9-]+\.vercel\.app$/i;
+
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.has(origin) || vercelPreviewRegex.test(origin)) {
+      return callback(null, true);
+    }
+    console.warn('CORS blocked origin:', origin);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true
+};
+
+console.log('*** Allowed CORS origins:', Array.from(allowedOrigins));
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 // Middleware
 app.use(helmet()); // Security headers
 app.use(morgan('combined')); // Logging
@@ -26,21 +56,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.'
 });
 app.use(limiter);
-
-// CORS configuration
-const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:3000')
-  .split(',')
-  .map(origin => origin.trim())
-  .filter(Boolean);
-
-if (!allowedOrigins.includes('http://localhost:8080')) {
-  allowedOrigins.push('http://localhost:8080');
-}
-
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
